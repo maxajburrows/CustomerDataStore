@@ -50,6 +50,9 @@ public class CustomerDataStoreController {
     // Add customer
     @PostMapping
     public ResponseEntity<CustomerResponseDto> addNewCustomer(@RequestBody AddCustomerRequestDto newCustomer) {
+        // Validate the added email here
+
+
         // Implementation required
         return null;
     }
