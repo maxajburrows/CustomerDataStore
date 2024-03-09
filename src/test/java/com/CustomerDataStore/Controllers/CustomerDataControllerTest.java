@@ -4,14 +4,13 @@ import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +29,11 @@ class CustomerDataControllerTest {
                 "A street somewhere",
                 "max@notMyRealEmail.com"
         );
-        HttpEntity<String> request = new HttpEntity<>(new ObjectMapper().writeValueAsString(newCustomer));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> request = new HttpEntity<>(new ObjectMapper().writeValueAsString(newCustomer), headers);
 
         ResponseEntity<CustomerResponseDto> response = testRestTemplate.postForEntity("/customers",
                 request,
@@ -46,7 +49,7 @@ class CustomerDataControllerTest {
                 "Created customer last name did not match request");
         assertEquals(newCustomer.age(), createdCustomer.age(),
                 "Created customer age did not match request");
-        assertEquals(newCustomer.Address(), createdCustomer.Address(),
+        assertEquals(newCustomer.address(), createdCustomer.address(),
                 "Created customer address did not match request");
         assertEquals(newCustomer.emailAddress(), createdCustomer.emailAddress(),
                 "Created customer email address did not match request");

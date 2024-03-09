@@ -16,8 +16,7 @@ public class CustomerDataServiceImpl implements CustomerDataService {
     }
     @Override
     public CustomerResponseDto createCustomer(AddCustomerRequestDto newCustomer) {
-        CustomerDataEntity newCustomerEntity = modelMapper.map(newCustomer, CustomerDataEntity.class);
-        CustomerDataEntity storedCustomerEntity = customerDataRepo.save(newCustomerEntity);
-        return modelMapper.map(storedCustomerEntity, CustomerResponseDto.class);
+        CustomerDataEntity storedCustomerEntity = customerDataRepo.save(new CustomerDataEntity(newCustomer));
+        return new CustomerResponseDto(storedCustomerEntity);
     }
 }

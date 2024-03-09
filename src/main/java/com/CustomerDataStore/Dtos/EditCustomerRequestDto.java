@@ -6,6 +6,6 @@ public record EditCustomerRequestDto(
         String firstName,
         String lastName,
         int age,
-        String Address,
+        String address,
         String emailAddress) {
 }
