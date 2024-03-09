@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class CustomerDataEntity {
     @Id
     @GeneratedValue
-    private long id;
+    private long customerId;
     @Column(nullable = false, length = 30)
     String firstName;
     @Column(nullable = false, length = 30)

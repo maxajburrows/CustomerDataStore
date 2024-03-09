@@ -3,6 +3,7 @@ package com.CustomerDataStore.Controllers;
 import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
+import com.CustomerDataStore.Entities.CustomerDataEntity;
 import com.CustomerDataStore.Services.CustomerDataStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -51,10 +52,8 @@ public class CustomerDataStoreController {
     @PostMapping
     public ResponseEntity<CustomerResponseDto> addNewCustomer(@RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
-
-
-        // Implementation required
-        return null;
+        CustomerResponseDto newCustomerDto = customerDataStoreService.createCustomer(newCustomer);
+        return ResponseEntity.ok(newCustomerDto);
     }
 
     // Edit customer information

@@ -1,8 +1,10 @@
 package com.CustomerDataStore.Dtos;
 
-public record CustomerResponseDto(String firstName,
-                                  String lastName,
-                                  int age,
-                                  String Address,
-                                  String emailAddress) {
+public record CustomerResponseDto(
+        Long customerId,
+        String firstName,
+        String lastName,
+        int age,
+        String Address,
+        String emailAddress) {
 }
