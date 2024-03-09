@@ -6,17 +6,16 @@ import com.CustomerDataStore.Entities.CustomerDataEntity;
 import com.CustomerDataStore.Repositories.CustomerDataRepository;
 import org.modelmapper.ModelMapper;
 
-public class CustomerDataStoreServiceImpl implements CustomerDataStoreService {
-
+public class CustomerDataServiceImpl implements CustomerDataService {
     ModelMapper modelMapper = new ModelMapper();
-    CustomerDataRepository customerDataRepository;
-    public CustomerDataStoreServiceImpl(CustomerDataRepository customerDataRepository) {
-        this.customerDataRepository = customerDataRepository;
+    CustomerDataRepository customerDataRepo;
+    public CustomerDataServiceImpl(CustomerDataRepository customerDataRepo) {
+        this.customerDataRepo = customerDataRepo;
     }
     @Override
     public CustomerResponseDto createCustomer(AddCustomerRequestDto newCustomer) {
         CustomerDataEntity newCustomerEntity = modelMapper.map(newCustomer, CustomerDataEntity.class);
-        CustomerDataEntity storedCustomerEntity = customerDataRepository.save(newCustomerEntity);
+        CustomerDataEntity storedCustomerEntity = customerDataRepo.save(newCustomerEntity);
         return modelMapper.map(storedCustomerEntity, CustomerResponseDto.class);
     }
 }

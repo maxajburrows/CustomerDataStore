@@ -3,9 +3,7 @@ package com.CustomerDataStore.Controllers;
 import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
-import com.CustomerDataStore.Entities.CustomerDataEntity;
-import com.CustomerDataStore.Services.CustomerDataStoreService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.CustomerDataStore.Services.CustomerDataService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
-public class CustomerDataStoreController {
+public class CustomerDataController {
 
-    CustomerDataStoreService customerDataStoreService;
-    public CustomerDataStoreController(CustomerDataStoreService customerDataStoreService) {
-        this.customerDataStoreService = customerDataStoreService;
+    CustomerDataService customerDataService;
+    public CustomerDataController(CustomerDataService customerDataService) {
+        this.customerDataService = customerDataService;
     }
     // Get all customers
     @GetMapping
@@ -50,9 +48,9 @@ public class CustomerDataStoreController {
 
     // Add customer
     @PostMapping
-    public ResponseEntity<CustomerResponseDto> addNewCustomer(@RequestBody AddCustomerRequestDto newCustomer) {
+    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
-        CustomerResponseDto newCustomerDto = customerDataStoreService.createCustomer(newCustomer);
+        CustomerResponseDto newCustomerDto = customerDataService.createCustomer(newCustomer);
         return ResponseEntity.ok(newCustomerDto);
     }
 
