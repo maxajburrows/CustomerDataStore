@@ -5,7 +5,9 @@ import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Entities.CustomerDataEntity;
 import com.CustomerDataStore.Repositories.CustomerDataRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomerDataServiceImpl implements CustomerDataService {
     ModelMapper modelMapper = new ModelMapper();
     CustomerDataRepository customerDataRepo;
