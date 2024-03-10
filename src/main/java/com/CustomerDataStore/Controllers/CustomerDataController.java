@@ -25,6 +25,7 @@ public class CustomerDataController {
         return null;
     }
 
+    // Add hypermedia links to responses
     // Get customer by id
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable long id) {
@@ -33,9 +34,9 @@ public class CustomerDataController {
 
 
     // Get by full name
-    @GetMapping("/name?firstname={firstName}&lastname={lastName}")
-    public ResponseEntity<CustomerResponseDto> getCustomerByFullName(@PathVariable String firstName,
-                                                                     @PathVariable String lastName) {
+    @GetMapping("/name/{lastName}/{firstName}")
+    public ResponseEntity<CustomerResponseDto> getCustomerByFullName(@PathVariable String lastName,
+                                                                     @PathVariable String firstName) {
         // Implementation required
         return null;
     }
