@@ -4,6 +4,7 @@ import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.CustomerDataStore.Services.CustomerDataService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,40 +25,33 @@ public class CustomerDataController {
         return null;
     }
 
+    // Add hypermedia links to responses
     // Get customer by id
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable long id) {
-        // Implementation required
-        return null;
+        return ResponseEntity.ok(customerDataService.getCustomerById(id));
     }
 
-    // Get by last name
-    @GetMapping("/{lastName}")
-    public ResponseEntity<CustomerResponseDto> getCustomerFirstName(@PathVariable String lastName) {
-        // Implementation required
-        return null;
-    }
 
     // Get by full name
-    @GetMapping("/{lastName}/{firstName}")
+    @GetMapping("/name/{lastName}/{firstName}")
     public ResponseEntity<CustomerResponseDto> getCustomerByFullName(@PathVariable String lastName,
                                                                      @PathVariable String firstName) {
         // Implementation required
         return null;
     }
 
-    // Add customer
+    // Add new customer to the database
     @PostMapping
-    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody AddCustomerRequestDto newCustomer) {
+    public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
-        CustomerResponseDto newCustomerDto = customerDataService.createCustomer(newCustomer);
-        return ResponseEntity.ok(newCustomerDto);
+        return ResponseEntity.ok(customerDataService.createCustomer(newCustomer));
     }
 
     // Edit customer information
-    @PatchMapping
-    public ResponseEntity<CustomerResponseDto> editCustomer(@RequestBody EditCustomerRequestDto editedCustomer) {
-        // Implementation required
-        return null;
-    }
+//    @PatchMapping
+//    public ResponseEntity<CustomerResponseDto> editCustomer(@RequestBody EditCustomerRequestDto editedCustomer) {
+//        // Implementation required
+//        return null;
+//    }
 }
