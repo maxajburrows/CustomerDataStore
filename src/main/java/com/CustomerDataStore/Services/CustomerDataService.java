@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 
 public interface CustomerDataService {
     CustomerResponseDto createCustomer(AddCustomerRequestDto newCustomer);
+    CustomerResponseDto getCustomerById(long customerId);
 }

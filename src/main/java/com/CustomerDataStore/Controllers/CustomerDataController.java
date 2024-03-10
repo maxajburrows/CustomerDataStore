@@ -47,9 +47,9 @@ public class CustomerDataController {
         return null;
     }
 
-    // Add customer
+    // Add new customer to the database
     @PostMapping
-    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody @Valid AddCustomerRequestDto newCustomer) {
+    public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
         CustomerResponseDto newCustomerDto = customerDataService.createCustomer(newCustomer);
         return ResponseEntity.ok(newCustomerDto);
