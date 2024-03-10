@@ -31,17 +31,11 @@ public class CustomerDataController {
         return ResponseEntity.ok(customerDataService.getCustomerById(id));
     }
 
-    // Get by last name
-    @GetMapping("/{lastName}")
-    public ResponseEntity<CustomerResponseDto> getCustomerFirstName(@PathVariable String lastName) {
-        // Implementation required
-        return null;
-    }
 
     // Get by full name
-    @GetMapping("/{lastName}/{firstName}")
-    public ResponseEntity<CustomerResponseDto> getCustomerByFullName(@PathVariable String lastName,
-                                                                     @PathVariable String firstName) {
+    @GetMapping("/name?firstname={firstName}&lastname={lastName}")
+    public ResponseEntity<CustomerResponseDto> getCustomerByFullName(@PathVariable String firstName,
+                                                                     @PathVariable String lastName) {
         // Implementation required
         return null;
     }
@@ -54,9 +48,9 @@ public class CustomerDataController {
     }
 
     // Edit customer information
-    @PatchMapping
-    public ResponseEntity<CustomerResponseDto> editCustomer(@RequestBody EditCustomerRequestDto editedCustomer) {
-        // Implementation required
-        return null;
-    }
+//    @PatchMapping
+//    public ResponseEntity<CustomerResponseDto> editCustomer(@RequestBody EditCustomerRequestDto editedCustomer) {
+//        // Implementation required
+//        return null;
+//    }
 }
