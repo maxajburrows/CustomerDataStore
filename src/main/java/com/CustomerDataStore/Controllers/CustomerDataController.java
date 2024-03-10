@@ -4,6 +4,7 @@ import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.CustomerDataStore.Services.CustomerDataService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +49,7 @@ public class CustomerDataController {
 
     // Add customer
     @PostMapping
-    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody AddCustomerRequestDto newCustomer) {
+    public ResponseEntity<CustomerResponseDto> createCustomer(@RequestBody @Valid AddCustomerRequestDto newCustomer) {
         // Validate the added email here
         CustomerResponseDto newCustomerDto = customerDataService.createCustomer(newCustomer);
         return ResponseEntity.ok(newCustomerDto);
