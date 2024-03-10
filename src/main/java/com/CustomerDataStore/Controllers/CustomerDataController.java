@@ -28,8 +28,7 @@ public class CustomerDataController {
     // Get customer by id
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable long id) {
-        // Implementation required
-        return null;
+        return ResponseEntity.ok(customerDataService.getCustomerById(id));
     }
 
     // Get by last name
@@ -51,8 +50,7 @@ public class CustomerDataController {
     @PostMapping
     public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
-        CustomerResponseDto newCustomerDto = customerDataService.createCustomer(newCustomer);
-        return ResponseEntity.ok(newCustomerDto);
+        return ResponseEntity.ok(customerDataService.createCustomer(newCustomer));
     }
 
     // Edit customer information
