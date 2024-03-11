@@ -7,7 +7,10 @@ import com.CustomerDataStore.Exceptions.CustomerNotFoundException;
 import com.CustomerDataStore.Repositories.CustomerDataRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class CustomerDataServiceImpl implements CustomerDataService {
@@ -29,5 +32,13 @@ public class CustomerDataServiceImpl implements CustomerDataService {
             throw new CustomerNotFoundException(customerIdNotFoundMessage);
         }
         return new CustomerResponseDto(customerData.get());
+    }
+
+    @Override
+    public List<CustomerResponseDto> getCustomers() {
+        Iterable<CustomerDataEntity> customers = customerDataRepo.findAll();
+        return StreamSupport.stream(customers.spliterator(), false)
+                .map(CustomerResponseDto::new)
+                .toList();
     }
 }
