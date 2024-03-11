@@ -1,7 +1,7 @@
 package com.CustomerDataStore.Controllers;
 
-import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Exceptions.CustomerNotFoundException;
+import com.CustomerDataStore.Exceptions.NoCustomersException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +16,10 @@ public class GlobalErrorHandler {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .body(ex.getMessage());
+        }
+        @ExceptionHandler({NoCustomersException.class})
+        protected ResponseEntity handleNoCustomersException() {
+            return ResponseEntity.noContent().build();
         }
     }
 }
