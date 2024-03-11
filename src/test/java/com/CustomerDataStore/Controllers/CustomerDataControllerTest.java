@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 
 import java.util.List;
@@ -24,6 +25,13 @@ class CustomerDataControllerTest {
     private long customerId1;
     AddCustomerRequestDto customer1;
     String customerIdNotFoundMessage = "There is not customer with this customerId in the database!";
+    HttpHeaders headers;
+    @BeforeAll
+    void setUp() {
+        headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+    }
     @Test
     @Order(2)
     void testCreateCustomer_whenValidCustomerDetailsProvided_ReturnsCustomerDetails() throws JsonProcessingException {
@@ -34,10 +42,6 @@ class CustomerDataControllerTest {
                 "A street somewhere",
                 "max@notMyRealEmail.com"
         );
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-
         HttpEntity<String> request = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer1), headers);
 
         ResponseEntity<CustomerResponseDto> response = testRestTemplate.postForEntity("/customers",
@@ -93,4 +97,45 @@ class CustomerDataControllerTest {
         assertEquals(customerIdNotFoundMessage, response.getBody());
     }
 
+    @Test
+    @Order(4)
+    void testGetAllCustomers_ifCustomersInDB_returnsAllCustomers() throws JsonProcessingException {
+        AddCustomerRequestDto customer2 = new AddCustomerRequestDto(
+                "Amelia",
+                "Burrows",
+                24,
+                "Not with me anymore",
+                "amelia@notHerRealEmailEither.com"
+        );
+        HttpEntity<String> postRequest = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer2), headers);
+        long customerId2 = testRestTemplate.postForEntity("/customers",
+                        postRequest,
+                        CustomerResponseDto.class)
+                .getBody()
+                .customerId();
+
+        HttpEntity getRequest = new HttpEntity(null, headers);
+        ResponseEntity<List<CustomerResponseDto>> response = testRestTemplate.exchange("/customers",
+                HttpMethod.GET,
+                getRequest,
+                new ParameterizedTypeReference<List<CustomerResponseDto>>() {
+                });
+        List<CustomerResponseDto> customers = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(2, customers.size(),
+                "The incorrect number of customers is being returned");
+        assertEquals(customerId1, customers.get(0).customerId(),
+                "Retrieved customerId did not match posted customerId");
+        assertEquals(customer1.firstName(), customers.get(0).firstName(),
+                "Retrieved customer first name did not match posted first name");
+        assertEquals(customer2.lastName(), customers.get(1).lastName(),
+                "Retrieved customer last name did not match posted last name");
+        assertEquals(customer2.age(), customers.get(1).age(),
+                "Retrieved customer age did not match posted age");
+        assertEquals(customer2.address(), customers.get(1).address(),
+                "Retrieved customer address did not match posted address");
+        assertEquals(customer2.emailAddress(), customers.get(1).emailAddress(),
+                "Retrieved customer email address did not match posted email address");
+    }
 }
