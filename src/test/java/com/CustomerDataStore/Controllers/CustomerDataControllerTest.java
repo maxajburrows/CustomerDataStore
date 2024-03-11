@@ -34,6 +34,7 @@ class CustomerDataControllerTest {
     }
     @Test
     @Order(3)
+    @DisplayName("Add customer")
     void testCreateCustomer_whenValidCustomerDetailsProvided_ReturnsCustomerDetails() throws JsonProcessingException {
         customer1 = new AddCustomerRequestDto(
                 "Max",
