@@ -33,7 +33,7 @@ class CustomerDataControllerTest {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
     }
     @Test
-    @Order(2)
+    @Order(3)
     void testCreateCustomer_whenValidCustomerDetailsProvided_ReturnsCustomerDetails() throws JsonProcessingException {
         customer1 = new AddCustomerRequestDto(
                 "Max",
@@ -66,7 +66,7 @@ class CustomerDataControllerTest {
     }
     // TODO: Add display names to tests.
     @Test
-    @Order(3)
+    @Order(4)
     void testGetCustomerById_whenValidIdProvided_CorrectCustomerIsReturned() {
         ResponseEntity<CustomerResponseDto> response = testRestTemplate.getForEntity("/customers/"+customerId1,
                 CustomerResponseDto.class);
@@ -98,7 +98,7 @@ class CustomerDataControllerTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void testGetAllCustomers_ifCustomersInDB_returnsAllCustomers() throws JsonProcessingException {
         AddCustomerRequestDto customer2 = new AddCustomerRequestDto(
                 "Amelia",
@@ -137,5 +137,13 @@ class CustomerDataControllerTest {
                 "Retrieved customer address did not match posted address");
         assertEquals(customer2.emailAddress(), customers.get(1).emailAddress(),
                 "Retrieved customer email address did not match posted email address");
+    }
+
+    @Test
+    @Order(2)
+    void testGetAllCustomers_whenNoCustomersExist_204Returned() {
+        ResponseEntity response = testRestTemplate.getForEntity("/customers", null);
+
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 }

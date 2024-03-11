@@ -1,6 +1,5 @@
 package com.CustomerDataStore.Controllers;
 
-import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Exceptions.CustomerNotFoundException;
 import com.CustomerDataStore.Exceptions.NoCustomersException;
 import org.springframework.http.HttpStatus;
