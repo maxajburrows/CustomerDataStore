@@ -92,4 +92,5 @@ class CustomerDataControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertEquals(customerIdNotFoundMessage, response.getBody());
     }
+
 }
