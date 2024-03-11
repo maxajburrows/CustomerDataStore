@@ -18,22 +18,18 @@ public class CustomerDataController {
     public CustomerDataController(CustomerDataService customerDataService) {
         this.customerDataService = customerDataService;
     }
-    // Get all customers
+
     @GetMapping
     public ResponseEntity<List<CustomerResponseDto>> getAllCustomers() {
-        // Implementation required
-        return null;
+        return ResponseEntity.ok(customerDataService.getCustomers());
     }
 
-    // Add hypermedia links to responses
-    // Get customer by id
+    // TODO: Add hypermedia links to responses - maybe
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable long id) {
         return ResponseEntity.ok(customerDataService.getCustomerById(id));
     }
 
-
-    // Get by full name
     @GetMapping("/name/{lastName}/{firstName}")
     public ResponseEntity<CustomerResponseDto> getCustomerByFullName(@PathVariable String lastName,
                                                                      @PathVariable String firstName) {
@@ -41,7 +37,6 @@ public class CustomerDataController {
         return null;
     }
 
-    // Add new customer to the database
     @PostMapping
     public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
