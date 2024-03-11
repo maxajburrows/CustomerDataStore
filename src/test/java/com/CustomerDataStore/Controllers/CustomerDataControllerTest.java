@@ -34,6 +34,7 @@ class CustomerDataControllerTest {
     }
     @Test
     @Order(3)
+    @DisplayName("Add customer")
     void testCreateCustomer_whenValidCustomerDetailsProvided_ReturnsCustomerDetails() throws JsonProcessingException {
         customer1 = new AddCustomerRequestDto(
                 "Max",
@@ -67,6 +68,7 @@ class CustomerDataControllerTest {
     // TODO: Add display names to tests.
     @Test
     @Order(4)
+    @DisplayName("Get customer by Id")
     void testGetCustomerById_whenValidIdProvided_CorrectCustomerIsReturned() {
         ResponseEntity<CustomerResponseDto> response = testRestTemplate.getForEntity("/customers/"+customerId1,
                 CustomerResponseDto.class);
@@ -89,6 +91,7 @@ class CustomerDataControllerTest {
 
     @Test
     @Order(1)
+    @DisplayName("Invalid id throws exceptions")
     void testGetCustomerById_whenInvalidIdProvided_404ReturnedWithMessage() {
         ResponseEntity<String> response = testRestTemplate.getForEntity("/customers/1",
                 String.class);
@@ -99,6 +102,7 @@ class CustomerDataControllerTest {
 
     @Test
     @Order(5)
+    @DisplayName("Get all customers DB populated")
     void testGetAllCustomers_ifCustomersInDB_returnsAllCustomers() throws JsonProcessingException {
         AddCustomerRequestDto customer2 = new AddCustomerRequestDto(
                 "Amelia",
@@ -141,6 +145,7 @@ class CustomerDataControllerTest {
 
     @Test
     @Order(2)
+    @DisplayName("Get all customers DB empty")
     void testGetAllCustomers_whenNoCustomersExist_204Returned() {
         ResponseEntity response = testRestTemplate.getForEntity("/customers", null);
 
