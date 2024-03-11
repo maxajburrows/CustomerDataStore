@@ -37,6 +37,7 @@ public class CustomerDataController {
         return null;
     }
 
+    // TODO: Deal with invalid requests properly - no error message currently
     @PostMapping
     public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
