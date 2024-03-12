@@ -31,6 +31,8 @@ class CustomerDataControllerTest {
     private long customerId1;
     AddCustomerRequestDto customer1;
     AddCustomerRequestDto customer2;
+    String newEmail;
+    String newAddress;
     HttpHeaders headers;
     @BeforeAll
     void setUp() {

@@ -71,6 +71,10 @@ public class CustomerDataServiceImpl implements CustomerDataService {
 
     @Override
     public CustomerResponseDto updateCustomer(long customerId, EditCustomerRequestDto newInformation) {
+        if ((newInformation.address() == null && newInformation.emailAddress() == null)) {
+            throw new MissingRequestDetailsException(emptyPatchRequestMessage);
+        }
+
         CustomerDataEntity customer = fetchCustomerFromDB(customerId);
         if (newInformation.emailAddress() != null) {
             customer.setEmailAddress(newInformation.emailAddress());
