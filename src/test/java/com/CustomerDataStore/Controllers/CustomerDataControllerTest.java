@@ -284,8 +284,13 @@ class CustomerDataControllerTest {
     @DisplayName("Update customer - address and email")
     void testUpdateCustomer_whenAddressAndEmailAddressProvided_bothCorrectlyUpdatedAndReturned() {
         HttpEntity<EditCustomerRequestDto> patchRequestEntity = new HttpEntity(customerUpdate, headers);
-        String url = baseURI+customerId1;
-        ResponseEntity<CustomerResponseDto> response = testRestTemplate.exchange(baseURI+"/"+customerId1,
+        HttpEntity<EditCustomerRequestDto> response2 = testRestTemplate.patchForObject(
+                patchRequestEntity,
+                CustomerResponseDto.class
+        )
+
+        String url = baseURI+"/"+customerId1;
+        ResponseEntity<CustomerResponseDto> response = testRestTemplate.exchange(url,
                 HttpMethod.PATCH,
                 patchRequestEntity,
                 CustomerResponseDto.class);
