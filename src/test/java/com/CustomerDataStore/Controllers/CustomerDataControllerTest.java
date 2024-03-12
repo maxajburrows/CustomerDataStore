@@ -260,4 +260,15 @@ class CustomerDataControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals(emptySearchByNameRequestMessage, response.getBody());
     }
+
+    @Test
+    @Order(10)
+    @DisplayName("Search by name - name not found")
+    void testSearchByName_whenNameNotFound_204StatusReturned() {
+        String firstName = customer2.firstName()+"some more letters";
+        String requestURI = baseURI+"/search-by-name"+"?first-name="+firstName;
+        ResponseEntity response = testRestTemplate.getForEntity(requestURI, null);
+
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
 }
