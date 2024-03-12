@@ -62,13 +62,6 @@ public class CustomerDataServiceImpl implements CustomerDataService {
                 (firstName == null) ? customerDataRepo.findByLastName(lastName) :
                         (lastName == null) ? customerDataRepo.findByFirstName(firstName) :
                                 customerDataRepo.findByFirstNameAndLastName(firstName, lastName);
-//        if (firstName == null) {
-//            customers = customerDataRepo.findByLastName(lastName);
-//        } else if (lastName == null) {
-//            customers = customerDataRepo.findByFirstName(firstName);
-//        } else {
-//            customers = customerDataRepo.findByFirstNameAndLastName(firstName, lastName);
-//        }
         checkIfAnyCustomersFound(customers);
 
         return customers.stream()
