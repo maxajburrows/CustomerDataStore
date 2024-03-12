@@ -60,7 +60,7 @@ public class CustomerDataServiceImpl implements CustomerDataService {
         return new CustomerResponseDto(customerDataRepo.save(customer));
     }
 
-    private void addNewAddress(CustomerDataEntity customerToUpdate, String newAddress) {
+    public void addNewAddress(CustomerDataEntity customerToUpdate, String newAddress) {
         List<String> addressList = customerToUpdate.getAddress();
         for (String address : addressList) {
             if (address.trim().compareToIgnoreCase(newAddress.trim()) == 0) return;
