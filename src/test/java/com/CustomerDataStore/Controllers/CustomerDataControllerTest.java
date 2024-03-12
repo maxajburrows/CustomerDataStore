@@ -24,7 +24,7 @@ class CustomerDataControllerTest {
     private TestRestTemplate testRestTemplate;
     private long customerId1;
     AddCustomerRequestDto customer1;
-    String customerIdNotFoundMessage = "There is not customer with this customerId in the database!";
+    String customerIdNotFoundMessage = "There is no customer with this customerId in the database!";
     HttpHeaders headers;
     @BeforeAll
     void setUp() {
