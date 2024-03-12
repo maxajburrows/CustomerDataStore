@@ -44,10 +44,9 @@ public class CustomerDataController {
         return ResponseEntity.ok(customerDataService.createCustomer(newCustomer));
     }
 
-    // Edit customer information
-//    @PatchMapping
-//    public ResponseEntity<CustomerResponseDto> editCustomer(@RequestBody EditCustomerRequestDto editedCustomer) {
-//        // Implementation required
-//        return null;
-//    }
+    @PatchMapping("/{customerId}")
+    public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable long customerId,
+                                                            @RequestBody EditCustomerRequestDto editedCustomer) {
+        return ResponseEntity.ok(customerDataService.updateCustomer(customerId, editedCustomer));
+    }
 }

@@ -2,6 +2,7 @@ package com.CustomerDataStore.Services;
 
 import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.CustomerResponseDto;
+import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.CustomerDataStore.Entities.CustomerDataEntity;
 import com.CustomerDataStore.Exceptions.CustomerNotFoundException;
 import com.CustomerDataStore.Exceptions.NoCustomersException;
@@ -46,5 +47,11 @@ public class CustomerDataServiceImpl implements CustomerDataService {
         return customers.stream()
                 .map(CustomerResponseDto::new)
                 .toList();
+    }
+
+    @Override
+    public CustomerResponseDto updateCustomer(long id, EditCustomerRequestDto newInformation) {
+        // Try and make sure the patch request is idempotent
+        return null;
     }
 }
