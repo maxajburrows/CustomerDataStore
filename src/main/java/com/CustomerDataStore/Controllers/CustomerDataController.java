@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 // TODO: Pre-load database with some data
+// TODO: Add swagger documentation
 @RestController
 @RequestMapping("/customers")
 public class CustomerDataController {
