@@ -111,7 +111,6 @@ class CustomerDataControllerTest {
     @Order(4)
     @DisplayName("Get customer - invalid id throws exception")
     void testGetCustomerById_whenInvalidIdProvided_404ReturnedWithMessage() {
-        // TODO: May be better to do this test when the database isn't empty (maybe as well).
         ResponseEntity<String> response = testRestTemplate.getForEntity(baseURI+"/1"+customerId1,
                 String.class);
 
