@@ -4,6 +4,7 @@ import com.CustomerDataStore.Entities.CustomerDataEntity;
 import com.CustomerDataStore.Repositories.CustomerDataRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -30,12 +31,13 @@ class CustomerDataServiceImplTest {
         customer.setCustomerId(1);
         customer.setFirstName("Dan");
         customer.setLastName("Brown");
-        address1 = "Address 1";
+        address1 = " Address 1";
         address2 = "Address 2";
         customer.setAddress(new ArrayList<>(Arrays.asList(address1, address2)));
         customer.setEmailAddress("test@test.com");
     }
     @Test
+    @DisplayName("Add new address - unique address")
     void testAddNewAddress_whenUniqueNewAddressProvided_newAddressAddedToCustomerEntity() {
         String newAddress = "Address 3";
 
@@ -49,6 +51,7 @@ class CustomerDataServiceImplTest {
     }
 
     @Test
+    @DisplayName("Duplicated new address - different case")
     void testAddNewAddress_whenDuplicateAddressWithDifferentCaseProvided_customerUnchanged() {
         String newAddress = "adDress 2";
 
@@ -61,6 +64,7 @@ class CustomerDataServiceImplTest {
     }
 
     @Test
+    @DisplayName("Duplicated new address - additional whitespace")
     void testAddNewAddress_whenDuplicateAddressWithWhiteSpaceProvided_customerUnchanged() {
         String newAddress = " Address 1    ";
 
