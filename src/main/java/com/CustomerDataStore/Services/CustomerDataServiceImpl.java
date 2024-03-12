@@ -50,8 +50,23 @@ public class CustomerDataServiceImpl implements CustomerDataService {
 
     @Override
     public CustomerResponseDto updateCustomer(long customerId, EditCustomerRequestDto newInformation) {
-        CustomerDataEntity customerData = fetchCustomerFromDB(customerId);
-        return null;
+        CustomerDataEntity customer = fetchCustomerFromDB(customerId);
+        if (newInformation.emailAddress() != null) {
+            customer.setEmailAddress(newInformation.emailAddress());
+        }
+        if (newInformation.address() != null) {
+            addNewAddress(customer, newInformation.address());
+        }
+        return new CustomerResponseDto(customerDataRepo.save(customer));
+    }
+
+    private void addNewAddress(CustomerDataEntity customerToUpdate, String newAddress) {
+        List<String> addressList = customerToUpdate.getAddress();
+        for (String address : addressList) {
+            if (address.trim().compareToIgnoreCase(newAddress.trim()) == 0) return;
+        }
+        addressList.add(newAddress);
+        customerToUpdate.setAddress(addressList);
     }
 
     private CustomerDataEntity fetchCustomerFromDB(long customerId) {
