@@ -1,25 +1,33 @@
 package com.CustomerDataStore.Services;
 
+import com.CustomerDataStore.Dtos.CustomerResponseDto;
+import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.CustomerDataStore.Entities.CustomerDataEntity;
 import com.CustomerDataStore.Repositories.CustomerDataRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class CustomerDataServiceImplTest {
 
     @Mock
     CustomerDataRepository customerDataRepository;
-    CustomerDataServiceImpl customerDataService = new CustomerDataServiceImpl(customerDataRepository);
+    @InjectMocks
+    CustomerDataServiceImpl customerDataService;
 
     CustomerDataEntity customer;
     String address1;
@@ -31,6 +39,7 @@ class CustomerDataServiceImplTest {
         customer.setCustomerId(1);
         customer.setFirstName("Dan");
         customer.setLastName("Brown");
+        customer.setAge(55);
         address1 = " Address 1";
         address2 = "Address 2";
         customer.setAddress(new ArrayList<>(Arrays.asList(address1, address2)));
@@ -76,4 +85,28 @@ class CustomerDataServiceImplTest {
         assertEquals(address2, customerAddresses.get(1));
     }
 
+    @Test
+    void testUpdateCustomer_whenValidAddressAndEmailAddressProvided_bothUpdated() {
+        when(customerDataRepository.findById(any(long.class)))
+                .thenReturn(Optional.ofNullable(customer));
+        when(customerDataRepository.save(any(CustomerDataEntity.class)))
+                .thenAnswer(invocationOnMock -> {
+                    return invocationOnMock.getArgument(0);
+                });
+
+        String newAddress = "Number 5, Street 2, Amsterdam";
+        String newEmailAddress = "anotherTest@nextTest.com";
+        EditCustomerRequestDto newInformation = new EditCustomerRequestDto(newAddress, newEmailAddress);
+
+        CustomerResponseDto updatedCustomer = customerDataService.updateCustomer(1, newInformation);
+
+        assertEquals(customer.getCustomerId(), updatedCustomer.customerId());
+        assertEquals(customer.getFirstName(), updatedCustomer.firstName());
+        assertEquals(customer.getLastName(), updatedCustomer.lastName());
+        assertEquals(customer.getAge(), updatedCustomer.age());
+        assertEquals(address1, updatedCustomer.address().get(0));
+        assertEquals(address2, updatedCustomer.address().get(1));
+        assertEquals(newAddress, updatedCustomer.address().get(2));
+        assertEquals(newEmailAddress, updatedCustomer.emailAddress());
+    }
 }
