@@ -39,7 +39,7 @@ public class CustomerDataServiceImpl implements CustomerDataService {
         return new CustomerResponseDto(fetchCustomerFromDB(customerId));
     }
 
-    /* Could use parallel stream for large datasets.
+    /* Could use parallel stream for large datasets (get customers and searchByName methods).
     Not worth it for small datasets due to additional overhead and thread safety concerns. */
     @Override
     public List<CustomerResponseDto> getCustomers() {
@@ -50,8 +50,7 @@ public class CustomerDataServiceImpl implements CustomerDataService {
                 .toList();
     }
 
-    /* Could use parallel stream for large datasets.
-    Not worth it for small datasets due to additional overhead and thread safety concerns. */
+
     @Override
     public List<CustomerResponseDto> searchByName(String firstName, String lastName) {
         if (firstName == null && lastName == null) {
