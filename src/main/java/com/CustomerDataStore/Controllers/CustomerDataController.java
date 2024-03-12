@@ -25,9 +25,9 @@ public class CustomerDataController {
     }
 
     // TODO: Add hypermedia links to responses - maybe
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable long id) {
-        return ResponseEntity.ok(customerDataService.getCustomerById(id));
+    @GetMapping("/{customerId}")
+    public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable long customerId) {
+        return ResponseEntity.ok(customerDataService.getCustomerById(customerId));
     }
 
     @GetMapping("/name/{lastName}/{firstName}")
