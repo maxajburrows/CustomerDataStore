@@ -90,9 +90,7 @@ class CustomerDataServiceImplTest {
         when(customerDataRepository.findById(any(long.class)))
                 .thenReturn(Optional.ofNullable(customer));
         when(customerDataRepository.save(any(CustomerDataEntity.class)))
-                .thenAnswer(invocationOnMock -> {
-                    return invocationOnMock.getArgument(0);
-                });
+                .thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
 
         String newAddress = "Number 5, Street 2, Amsterdam";
         String newEmailAddress = "anotherTest@nextTest.com";
