@@ -18,7 +18,6 @@ class CustomerDataServiceImplTest {
 
     @Mock
     CustomerDataRepository customerDataRepository;
-    //@InjectMocks
     CustomerDataServiceImpl customerDataService = new CustomerDataServiceImpl(customerDataRepository);
 
     CustomerDataEntity customer;
@@ -52,6 +51,18 @@ class CustomerDataServiceImplTest {
     @Test
     void testAddNewAddress_whenDuplicateAddressWithDifferentCaseProvided_customerUnchanged() {
         String newAddress = "adDress 2";
+
+        customerDataService.addNewAddress(customer, newAddress);
+        List<String> customerAddresses = customer.getAddress();
+
+        assertEquals(2, customerAddresses.size());
+        assertEquals(address1, customerAddresses.get(0));
+        assertEquals(address2, customerAddresses.get(1));
+    }
+
+    @Test
+    void testAddNewAddress_whenDuplicateAddressWithWhiteSpaceProvided_customerUnchanged() {
+        String newAddress = " Address 1    ";
 
         customerDataService.addNewAddress(customer, newAddress);
         List<String> customerAddresses = customer.getAddress();
