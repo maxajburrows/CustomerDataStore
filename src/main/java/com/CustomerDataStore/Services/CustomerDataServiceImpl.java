@@ -17,8 +17,7 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class CustomerDataServiceImpl implements CustomerDataService {
-    String customerIdNotFoundMessage = "There is not customer with this customerId in the database!";
-    String noCustomersFoundMessage = "There are currently no customers in the database!";
+    String customerIdNotFoundMessage = "There is no customer with this customerId in the database!";
     CustomerDataRepository customerDataRepo;
     public CustomerDataServiceImpl(CustomerDataRepository customerDataRepo) {
         this.customerDataRepo = customerDataRepo;
