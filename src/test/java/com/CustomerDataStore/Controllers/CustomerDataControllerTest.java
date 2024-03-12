@@ -2,6 +2,7 @@ package com.CustomerDataStore.Controllers;
 
 import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.CustomerResponseDto;
+import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -31,14 +32,19 @@ class CustomerDataControllerTest {
     private long customerId1;
     AddCustomerRequestDto customer1;
     AddCustomerRequestDto customer2;
-    String newEmail;
+    EditCustomerRequestDto customerUpdate;
     String newAddress;
+    String newEmailAddress;
     HttpHeaders headers;
     @BeforeAll
     void setUp() {
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+
+        newAddress = "In the Netherlands now";
+        newEmailAddress = "max@updatedNotRealEmail";
+        customerUpdate = new EditCustomerRequestDto(newAddress, newEmailAddress);
     }
 
     @Test
@@ -271,5 +277,33 @@ class CustomerDataControllerTest {
         ResponseEntity response = testRestTemplate.getForEntity(requestURI, null);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    @Order(11)
+    @DisplayName("Update customer - address and email")
+    void testUpdateCustomer_whenAddressAndEmailAddressProvided_bothCorrectlyUpdatedAndReturned() {
+        HttpEntity patchRequestEntity = new HttpEntity(customerUpdate, headers);
+        ResponseEntity<CustomerResponseDto> response = testRestTemplate.exchange(baseURI+"/"+customerId1,
+                HttpMethod.PATCH,
+                patchRequestEntity,
+                CustomerResponseDto.class);
+        CustomerResponseDto retrievedCustomer = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(customerId1, retrievedCustomer.customerId(),
+                "Retrieved customerId did not match posted customerId");
+        assertEquals(customer1.firstName(), retrievedCustomer.firstName(),
+                "Retrieved customer first name did not match posted first name");
+        assertEquals(customer1.lastName(), retrievedCustomer.lastName(),
+                "Retrieved customer last name did not match posted last name");
+        assertEquals(customer1.age(), retrievedCustomer.age(),
+                "Retrieved customer age did not match posted age");
+        assertEquals(customer1.address().get(0), retrievedCustomer.address().get(0),
+                "Retrieved customer address did not match posted address");
+        assertEquals(newAddress, retrievedCustomer.address().get(1),
+                "Retrieved customer address did not match patched address");
+        assertEquals(newEmailAddress, retrievedCustomer.emailAddress(),
+                "Retrieved customer email address did not match patched email address");
     }
 }
