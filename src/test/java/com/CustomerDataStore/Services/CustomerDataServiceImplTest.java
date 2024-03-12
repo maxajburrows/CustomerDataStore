@@ -107,4 +107,25 @@ class CustomerDataServiceImplTest {
         assertEquals(newAddress, updatedCustomer.address().get(2));
         assertEquals(newEmailAddress, updatedCustomer.emailAddress());
     }
+
+    @Test
+    void testUpdateCustomer_whenValidAddressOnlyProvided_addressOnlyUpdated() {
+        when(customerDataRepository.findById(any(long.class)))
+                .thenReturn(Optional.ofNullable(customer));
+        when(customerDataRepository.save(any(CustomerDataEntity.class)))
+                .thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+
+        String newAddress = "3, GreatStraat, Weesp";
+        EditCustomerRequestDto newInformation = new EditCustomerRequestDto(newAddress, null);
+
+        CustomerResponseDto updatedCustomer = customerDataService.updateCustomer(1, newInformation);
+
+        assertEquals(customer.getCustomerId(), updatedCustomer.customerId());
+        assertEquals(customer.getFirstName(), updatedCustomer.firstName());
+        assertEquals(customer.getLastName(), updatedCustomer.lastName());
+        assertEquals(customer.getAge(), updatedCustomer.age());
+        assertEquals(address1, updatedCustomer.address().get(0));
+        assertEquals(address2, updatedCustomer.address().get(1));
+        assertEquals(newAddress, updatedCustomer.address().get(2));
+    }
 }
