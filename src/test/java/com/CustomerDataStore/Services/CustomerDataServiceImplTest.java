@@ -141,7 +141,7 @@ class CustomerDataServiceImplTest {
                 .thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
 
         String newEmailAddress = "google@gmail.com";
-        EditCustomerRequestDto newInformation = new EditCustomerRequestDto(null, null);
+        EditCustomerRequestDto newInformation = new EditCustomerRequestDto(null, newEmailAddress);
 
         CustomerResponseDto updatedCustomer = customerDataService.updateCustomer(1, newInformation);
 
@@ -151,6 +151,6 @@ class CustomerDataServiceImplTest {
         assertEquals(customer.getAge(), updatedCustomer.age());
         assertEquals(address1, updatedCustomer.address().get(0));
         assertEquals(address2, updatedCustomer.address().get(1));
-        assertEquals(customer.getEmailAddress(), updatedCustomer.emailAddress());
+        assertEquals(newEmailAddress, updatedCustomer.emailAddress());
     }
 }
