@@ -86,6 +86,7 @@ class CustomerDataServiceImplTest {
     }
 
     @Test
+    @DisplayName("Update address and email address")
     void testUpdateCustomer_whenValidAddressAndEmailAddressProvided_bothUpdated() {
         when(customerDataRepository.findById(any(long.class)))
                 .thenReturn(Optional.ofNullable(customer));
@@ -109,6 +110,7 @@ class CustomerDataServiceImplTest {
     }
 
     @Test
+    @DisplayName("Update address only")
     void testUpdateCustomer_whenValidAddressOnlyProvided_addressOnlyUpdated() {
         when(customerDataRepository.findById(any(long.class)))
                 .thenReturn(Optional.ofNullable(customer));
@@ -131,6 +133,7 @@ class CustomerDataServiceImplTest {
     }
 
     @Test
+    @DisplayName("Update email address only")
     void testUpdateCustomer_whenValidEmailAddressOnlyProvided_emailAddressOnlyUpdated() {
         when(customerDataRepository.findById(any(long.class)))
                 .thenReturn(Optional.ofNullable(customer));

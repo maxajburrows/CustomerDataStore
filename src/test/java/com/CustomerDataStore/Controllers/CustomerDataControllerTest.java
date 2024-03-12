@@ -87,7 +87,7 @@ class CustomerDataControllerTest {
         assertEquals(customer1.emailAddress(), createdCustomer.emailAddress(),
                 "Created customer email address did not match request");
     }
-    // TODO: Add display names to tests.
+
     @Test
     @Order(4)
     @DisplayName("Get customer by Id - valid Id")
