@@ -22,9 +22,12 @@ class CustomerDataControllerTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
+
+    private static final String customerIdNotFoundMessage =
+            "There is no customer with this customerId in the database!";
+    private static final String baseURI = "/customers";
     private long customerId1;
     AddCustomerRequestDto customer1;
-    String customerIdNotFoundMessage = "There is no customer with this customerId in the database!";
     HttpHeaders headers;
     @BeforeAll
     void setUp() {
@@ -37,7 +40,7 @@ class CustomerDataControllerTest {
     @Order(1)
     @DisplayName("Get all customers - DB empty")
     void testGetAllCustomers_whenNoCustomersExist_204Returned() {
-        ResponseEntity response = testRestTemplate.getForEntity("/customers", null);
+        ResponseEntity response = testRestTemplate.getForEntity(baseURI, null);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
@@ -55,7 +58,7 @@ class CustomerDataControllerTest {
         );
         HttpEntity<String> request = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer1), headers);
 
-        ResponseEntity<CustomerResponseDto> response = testRestTemplate.postForEntity("/customers",
+        ResponseEntity<CustomerResponseDto> response = testRestTemplate.postForEntity(baseURI,
                 request,
                 CustomerResponseDto.class);
         CustomerResponseDto createdCustomer = response.getBody();
@@ -79,8 +82,8 @@ class CustomerDataControllerTest {
     @Test
     @Order(3)
     @DisplayName("Get customer by Id - valid Id")
-    void testGetCustomerById_whenValidIdProvided_CorrectCustomerIsReturned() {
-        ResponseEntity<CustomerResponseDto> response = testRestTemplate.getForEntity("/customers/"+customerId1,
+    void testGetCustomerById_whenValidIdProvided_correctCustomerIsReturned() {
+        ResponseEntity<CustomerResponseDto> response = testRestTemplate.getForEntity(baseURI+"/"+customerId1,
                 CustomerResponseDto.class);
         CustomerResponseDto retrievedCustomer = response.getBody();
         
@@ -104,7 +107,7 @@ class CustomerDataControllerTest {
     @DisplayName("Get customer - invalid id throws exception")
     void testGetCustomerById_whenInvalidIdProvided_404ReturnedWithMessage() {
         // TODO: May be better to do this test when the database isn't empty (maybe as well).
-        ResponseEntity<String> response = testRestTemplate.getForEntity("/customers/1"+customerId1,
+        ResponseEntity<String> response = testRestTemplate.getForEntity(baseURI+"/1"+customerId1,
                 String.class);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -124,14 +127,14 @@ class CustomerDataControllerTest {
                 "amelia@notHerRealEmailEither.com"
         );
         HttpEntity<String> postRequest = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer2), headers);
-        long customerId2 = testRestTemplate.postForEntity("/customers",
+        long customerId2 = testRestTemplate.postForEntity(baseURI,
                         postRequest,
                         CustomerResponseDto.class)
                 .getBody()
                 .customerId();
 
         HttpEntity getRequest = new HttpEntity(null, headers);
-        ResponseEntity<List<CustomerResponseDto>> response = testRestTemplate.exchange("/customers",
+        ResponseEntity<List<CustomerResponseDto>> response = testRestTemplate.exchange(baseURI,
                 HttpMethod.GET,
                 getRequest,
                 new ParameterizedTypeReference<List<CustomerResponseDto>>() {
@@ -154,4 +157,27 @@ class CustomerDataControllerTest {
         assertEquals(customer2.emailAddress(), customers.get(1).emailAddress(),
                 "Retrieved customer email address did not match posted email address");
     }
+
+//    @Test
+//    @Order(6)
+//    @DisplayName("Search by name - valid first and last name")
+//    void testSearchByName_whenFirstAndLastNameProvided_correctCustomersAreReturned() {
+//        ResponseEntity<CustomerResponseDto> response = testRestTemplate.getForEntity("/customers/"+customerId1,
+//                CustomerResponseDto.class);
+//        CustomerResponseDto retrievedCustomer = response.getBody();
+//
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        assertEquals(customerId1, retrievedCustomer.customerId(),
+//                "Retrieved customerId did not match posted customerId");
+//        assertEquals(customer1.firstName(), retrievedCustomer.firstName(),
+//                "Retrieved customer first name did not match posted first name");
+//        assertEquals(customer1.lastName(), retrievedCustomer.lastName(),
+//                "Retrieved customer last name did not match posted last name");
+//        assertEquals(customer1.age(), retrievedCustomer.age(),
+//                "Retrieved customer age did not match posted age");
+//        assertEquals(customer1.address().get(0), retrievedCustomer.address().get(0),
+//                "Retrieved customer address did not match posted address");
+//        assertEquals(customer1.emailAddress(), retrievedCustomer.emailAddress(),
+//                "Retrieved customer email address did not match posted email address");
+//    }
 }
