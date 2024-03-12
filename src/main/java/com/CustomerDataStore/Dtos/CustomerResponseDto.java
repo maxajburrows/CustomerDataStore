@@ -2,12 +2,14 @@ package com.CustomerDataStore.Dtos;
 
 import com.CustomerDataStore.Entities.CustomerDataEntity;
 
+import java.util.List;
+
 public record CustomerResponseDto(
         Long customerId,
         String firstName,
         String lastName,
         int age,
-        String address,
+        List<String> address,
         String emailAddress) {
     public CustomerResponseDto(CustomerDataEntity customer) {
         this(customer.getCustomerId(),

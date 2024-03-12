@@ -4,6 +4,9 @@ import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Repositories.CustomerDataRepository;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="Customer Data")
 public class CustomerDataEntity {
@@ -11,13 +14,17 @@ public class CustomerDataEntity {
     @GeneratedValue
     private long customerId;
     @Column(nullable = false, length = 30)
-    String firstName;
+    private String firstName;
     @Column(nullable = false, length = 30)
-    String lastName;
+    private String lastName;
     @Column(nullable = false)
-    int age;
-    @Column(nullable = false)
-    String address;
+    private int age;
+    /* Eager fetching prevents LazyInitialisationExceptions
+    and for small datasets memory usage isn't of high concern. */
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "Addresses", joinColumns = @JoinColumn(name = "customerId"))
+    @Column(name = "Address", nullable = false)
+    List<String> address = new ArrayList<>();
     @Column(nullable = false, length = 100)
     String emailAddress;
 
@@ -46,7 +53,7 @@ public class CustomerDataEntity {
         return age;
     }
 
-    public String getAddress() {
+    public List<String> getAddress() {
         return address;
     }
 

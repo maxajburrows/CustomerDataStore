@@ -38,6 +38,9 @@ public class CustomerDataServiceImpl implements CustomerDataService {
         return new CustomerResponseDto(customerData.get());
     }
 
+
+    /* Could use parallel stream for large datasets.
+    Not worth it for small datasets due to additional overhead and thread safety concerns. */
     @Override
     public List<CustomerResponseDto> getCustomers() {
         List<CustomerDataEntity> customers = customerDataRepo.findAll();
