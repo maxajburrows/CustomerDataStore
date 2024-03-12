@@ -23,3 +23,6 @@ jobs:
           architecture: x64
       - name: Build and Test
         run: mvn clean test
+      - name: Publish Test Report
+        if: success() || failure()
+        uses: scacap/action-surefire-report@v1
