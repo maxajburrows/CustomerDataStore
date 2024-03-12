@@ -25,4 +25,4 @@ jobs:
         run: mvn clean test
       - name: Publish Test Report
         if: success() || failure()
-        uses: turing85/publish-report@v1
+        uses: scacap/action-surefire-report@v1
