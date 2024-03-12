@@ -59,9 +59,10 @@ public class CustomerDataServiceImpl implements CustomerDataService {
         }
 
         List<CustomerDataEntity> customers =
-                (firstName == null) ? customerDataRepo.findByLastName(lastName.trim().toLowerCase()) :
-                        (lastName == null) ? customerDataRepo.findByFirstName(firstName.trim().toLowerCase()) :
-                                customerDataRepo.findByFirstNameAndLastName(firstName, lastName.trim().toLowerCase());
+                (firstName == null) ? customerDataRepo.findByLastNameIgnoreCase(lastName.trim()) :
+                        (lastName == null) ? customerDataRepo.findByFirstNameIgnoreCase(firstName.trim()) :
+                                customerDataRepo.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(
+                                        firstName.trim(), lastName.trim());
         checkIfAnyCustomersFound(customers);
 
         return customers.stream()
