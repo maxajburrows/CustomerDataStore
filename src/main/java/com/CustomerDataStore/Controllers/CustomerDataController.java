@@ -41,6 +41,7 @@ public class CustomerDataController {
     }
 
     // TODO: Deal with invalid requests properly - no error message currently
+    // TODO: Can you make the post accept string address not just a list
     @PostMapping
     public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
