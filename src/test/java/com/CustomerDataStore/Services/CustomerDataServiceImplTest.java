@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +33,7 @@ class CustomerDataServiceImplTest {
         customer.setLastName("Brown");
         address1 = "Address 1";
         address2 = "Address 2";
-        customer.setAddress(List.of(address1, address2));
+        customer.setAddress(new ArrayList<>(Arrays.asList(address1, address2)));
         customer.setEmailAddress("test@test.com");
     }
     @Test
