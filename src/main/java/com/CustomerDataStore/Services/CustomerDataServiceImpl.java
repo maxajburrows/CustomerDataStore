@@ -31,11 +31,7 @@ public class CustomerDataServiceImpl implements CustomerDataService {
 
     @Override
     public CustomerResponseDto getCustomerById(long customerId) {
-        Optional<CustomerDataEntity> customerData = customerDataRepo.findById(customerId);
-        if (customerData.isEmpty()) {
-            throw new CustomerNotFoundException(customerIdNotFoundMessage);
-        }
-        return new CustomerResponseDto(customerData.get());
+        return new CustomerResponseDto(fetchCustomerFromDB(customerId));
     }
 
 
@@ -53,8 +49,16 @@ public class CustomerDataServiceImpl implements CustomerDataService {
     }
 
     @Override
-    public CustomerResponseDto updateCustomer(long id, EditCustomerRequestDto newInformation) {
-        // Try and make sure the patch request is idempotent
+    public CustomerResponseDto updateCustomer(long customerId, EditCustomerRequestDto newInformation) {
+        CustomerDataEntity customerData = fetchCustomerFromDB(customerId);
         return null;
+    }
+
+    private CustomerDataEntity fetchCustomerFromDB(long customerId) {
+        Optional<CustomerDataEntity> customerDataOptional = customerDataRepo.findById(customerId);
+        if (customerDataOptional.isEmpty()) {
+            throw new CustomerNotFoundException(customerIdNotFoundMessage);
+        }
+        return customerDataOptional.get();
     }
 }

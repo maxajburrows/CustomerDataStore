@@ -11,5 +11,5 @@ public interface CustomerDataService {
     CustomerResponseDto createCustomer(AddCustomerRequestDto newCustomer);
     CustomerResponseDto getCustomerById(long customerId);
     List<CustomerResponseDto> getCustomers();
-    CustomerResponseDto updateCustomer(long id, EditCustomerRequestDto newInformation);
+    CustomerResponseDto updateCustomer(long customerId, EditCustomerRequestDto newInformation);
 }
