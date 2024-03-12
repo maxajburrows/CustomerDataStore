@@ -17,7 +17,7 @@ public record AddCustomerRequestDto(
         @NotNull(message = "Customer must have an age")
         int age,
         @NotNull(message = "Customer must have at least one address")
-        @Size(min = 3, message = "Address must be at least 3 characters")
+        @Size(min = 1, message = "Customer must have at least one address!")
         List<String> address,
         @NotNull(message = "Customer must have an email address!")
         @Size(min = 3, message = "Email address must be at least 3 characters")

@@ -62,7 +62,7 @@ class CustomerDataControllerTest {
                 "Max",
                 "Burrows",
                 26,
-                "A street somewhere",
+                List.of("A street somewhere"),
                 "max@notMyRealEmail.com"
         );
         HttpEntity<String> request = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer1), headers);
@@ -71,9 +71,9 @@ class CustomerDataControllerTest {
                 request,
                 CustomerResponseDto.class);
         CustomerResponseDto createdCustomer = response.getBody();
-        customerId1 = createdCustomer.customerId();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        customerId1 = createdCustomer.customerId();
         assertNotNull(createdCustomer.customerId(),
                 "Created customer should have a customerId");
         assertEquals(customer1.firstName(), createdCustomer.firstName(),
@@ -82,7 +82,7 @@ class CustomerDataControllerTest {
                 "Created customer last name did not match request");
         assertEquals(customer1.age(), createdCustomer.age(),
                 "Created customer age did not match request");
-        assertEquals(customer1.address(), createdCustomer.address(),
+        assertEquals(customer1.address().get(0), createdCustomer.address().get(0),
                 "Created customer address did not match request");
         assertEquals(customer1.emailAddress(), createdCustomer.emailAddress(),
                 "Created customer email address did not match request");
@@ -105,7 +105,7 @@ class CustomerDataControllerTest {
                 "Retrieved customer last name did not match posted last name");
         assertEquals(customer1.age(), retrievedCustomer.age(),
                 "Retrieved customer age did not match posted age");
-        assertEquals(customer1.address(), retrievedCustomer.address(),
+        assertEquals(customer1.address().get(0), retrievedCustomer.address().get(0),
                 "Retrieved customer address did not match posted address");
         assertEquals(customer1.emailAddress(), retrievedCustomer.emailAddress(),
                 "Retrieved customer email address did not match posted email address");
@@ -120,7 +120,7 @@ class CustomerDataControllerTest {
                 "Amelia",
                 "Burrows",
                 24,
-                "Not with me anymore",
+                List.of("Not with me anymore"),
                 "amelia@notHerRealEmailEither.com"
         );
         HttpEntity<String> postRequest = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer2), headers);
@@ -149,7 +149,7 @@ class CustomerDataControllerTest {
                 "Retrieved customer last name did not match posted last name");
         assertEquals(customer2.age(), customers.get(1).age(),
                 "Retrieved customer age did not match posted age");
-        assertEquals(customer2.address(), customers.get(1).address(),
+        assertEquals(customer2.address().get(0), customers.get(1).address().get(0),
                 "Retrieved customer address did not match posted address");
         assertEquals(customer2.emailAddress(), customers.get(1).emailAddress(),
                 "Retrieved customer email address did not match posted email address");
