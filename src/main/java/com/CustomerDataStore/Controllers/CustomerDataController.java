@@ -43,7 +43,7 @@ public class CustomerDataController {
     // TODO: Can you make the post accept string address not just a list (3)
     @PostMapping
     public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
-        // Validate the added email here
+        // TODO: Validate the added email here (3)
         return ResponseEntity.ok(customerDataService.createCustomer(newCustomer));
     }
 
