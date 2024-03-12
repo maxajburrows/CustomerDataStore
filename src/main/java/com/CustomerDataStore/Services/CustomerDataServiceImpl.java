@@ -59,6 +59,11 @@ public class CustomerDataServiceImpl implements CustomerDataService {
         return new CustomerResponseDto(customerDataRepo.save(customer));
     }
 
+    @Override
+    public List<CustomerResponseDto> searchByName(String firstName, String lastName) {
+        return null;
+    }
+
     public void addNewAddress(CustomerDataEntity customerToUpdate, String newAddress) {
         List<String> addressList = customerToUpdate.getAddress();
         for (String address : addressList) {

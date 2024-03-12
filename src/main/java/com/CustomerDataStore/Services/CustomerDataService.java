@@ -12,4 +12,5 @@ public interface CustomerDataService {
     CustomerResponseDto getCustomerById(long customerId);
     List<CustomerResponseDto> getCustomers();
     CustomerResponseDto updateCustomer(long customerId, EditCustomerRequestDto newInformation);
+    List<CustomerResponseDto> searchByName(String firstName, String lastName);
 }

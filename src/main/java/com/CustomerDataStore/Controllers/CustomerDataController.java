@@ -32,12 +32,10 @@ public class CustomerDataController {
     }
 
     @GetMapping("/search-by-name")
-    public ResponseEntity<CustomerResponseDto> getCustomerByFullName(
+    public ResponseEntity<List<CustomerResponseDto>> getCustomerByName(
             @RequestParam(name = "first-name", required = false) String firstName,
             @RequestParam(name = "last-name", required = false) String lastName) {
-        System.out.println("Firstname: " + firstName);
-        System.out.println("Lastname: " + lastName);
-        return null;
+        return ResponseEntity.ok(customerDataService.searchByName(firstName, lastName));
     }
 
     // TODO: Deal with invalid requests properly - no error message currently
