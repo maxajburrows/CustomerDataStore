@@ -3,7 +3,6 @@ package com.CustomerDataStore.Controllers;
 import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
-import com.CustomerDataStore.Exceptions.MissingRequestBodyException;
 import com.CustomerDataStore.Services.CustomerDataService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// TODO: Pre-load database with some data
 @RestController
 @RequestMapping("/customers")
 public class CustomerDataController {
