@@ -158,26 +158,34 @@ class CustomerDataControllerTest {
                 "Retrieved customer email address did not match posted email address");
     }
 
-//    @Test
-//    @Order(6)
-//    @DisplayName("Search by name - valid first and last name")
-//    void testSearchByName_whenFirstAndLastNameProvided_correctCustomersAreReturned() {
-//        ResponseEntity<CustomerResponseDto> response = testRestTemplate.getForEntity("/customers/"+customerId1,
-//                CustomerResponseDto.class);
-//        CustomerResponseDto retrievedCustomer = response.getBody();
-//
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertEquals(customerId1, retrievedCustomer.customerId(),
-//                "Retrieved customerId did not match posted customerId");
-//        assertEquals(customer1.firstName(), retrievedCustomer.firstName(),
-//                "Retrieved customer first name did not match posted first name");
-//        assertEquals(customer1.lastName(), retrievedCustomer.lastName(),
-//                "Retrieved customer last name did not match posted last name");
-//        assertEquals(customer1.age(), retrievedCustomer.age(),
-//                "Retrieved customer age did not match posted age");
-//        assertEquals(customer1.address().get(0), retrievedCustomer.address().get(0),
-//                "Retrieved customer address did not match posted address");
-//        assertEquals(customer1.emailAddress(), retrievedCustomer.emailAddress(),
-//                "Retrieved customer email address did not match posted email address");
-//    }
+    @Test
+    @Order(6)
+    @DisplayName("Search by name - valid first and last name")
+    void testSearchByName_whenFirstAndLastNameProvided_correctCustomersAreReturned() {
+        String firstName = customer1.firstName();
+        String lastName = customer1.lastName();
+        String requestURI = baseURI+"/search-by-name"+"?first-name="+firstName+"&last-name="+lastName;
+        HttpEntity getRequestEntity = new HttpEntity(null, headers);
+        ResponseEntity<List<CustomerResponseDto>> response = testRestTemplate.exchange(requestURI,
+                HttpMethod.GET,
+                getRequestEntity,
+                new ParameterizedTypeReference<List<CustomerResponseDto>>() {
+                });
+        List<CustomerResponseDto> retrievedCustomer = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertFalse(retrievedCustomer.isEmpty());
+        assertEquals(customerId1, retrievedCustomer.get(0).customerId(),
+                "Retrieved customerId did not match posted customerId");
+        assertEquals(customer1.firstName(), retrievedCustomer.get(0).firstName(),
+                "Retrieved customer first name did not match posted first name");
+        assertEquals(customer1.lastName(), retrievedCustomer.get(0).lastName(),
+                "Retrieved customer last name did not match posted last name");
+        assertEquals(customer1.age(), retrievedCustomer.get(0).age(),
+                "Retrieved customer age did not match posted age");
+        assertEquals(customer1.address().get(0), retrievedCustomer.get(0).address().get(0),
+                "Retrieved customer address did not match posted address");
+        assertEquals(customer1.emailAddress(), retrievedCustomer.get(0).emailAddress(),
+                "Retrieved customer email address did not match posted email address");
+    }
 }
