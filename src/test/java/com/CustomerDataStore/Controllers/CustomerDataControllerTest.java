@@ -25,6 +25,8 @@ class CustomerDataControllerTest {
 
     private static final String customerIdNotFoundMessage =
             "There is no customer with this customerId in the database!";
+    private static final String emptySearchByNameRequestMessage =
+            "You must provide either a firstname, lastname or both in the URI to search for users by name";
     private static final String baseURI = "/customers";
     private long customerId1;
     AddCustomerRequestDto customer1;
@@ -246,5 +248,16 @@ class CustomerDataControllerTest {
                 "Retrieved customer address did not match posted address");
         assertEquals(customer2.emailAddress(), retrievedCustomer.get(0).emailAddress(),
                 "Retrieved customer email address did not match posted email address");
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("Search by name - no names")
+    void testSearchByName_whenNoNamesProvided_400StatusReturned() {
+        ResponseEntity<String> response = testRestTemplate.getForEntity(baseURI+"/search-by-name",
+                String.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(emptySearchByNameRequestMessage, response.getBody());
     }
 }

@@ -27,7 +27,7 @@ public class GlobalErrorHandler {
         @ExceptionHandler({MissingRequestDetailsException.class})
         protected ResponseEntity<String> handleMissingDetailsException(MissingRequestDetailsException exception) {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
+                    .status(HttpStatus.BAD_REQUEST)
                     .body(exception.getMessage());
         }
     }

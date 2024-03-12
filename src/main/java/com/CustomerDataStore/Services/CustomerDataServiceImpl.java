@@ -23,7 +23,7 @@ public class CustomerDataServiceImpl implements CustomerDataService {
     private static final String emptyPatchRequestMessage =
             "You must provide either an address, an email address or both in the request body to update the user";
     private static final String emptySearchByNameRequestMessage =
-            "You must provide either a firstname, lastname or both to search for users by name";
+            "You must provide either a firstname, lastname or both in the URI to search for users by name";
     CustomerDataRepository customerDataRepo;
     public CustomerDataServiceImpl(CustomerDataRepository customerDataRepo) {
         this.customerDataRepo = customerDataRepo;
