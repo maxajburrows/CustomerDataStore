@@ -28,6 +28,7 @@ class CustomerDataControllerTest {
     private static final String baseURI = "/customers";
     private long customerId1;
     AddCustomerRequestDto customer1;
+    AddCustomerRequestDto customer2;
     HttpHeaders headers;
     @BeforeAll
     void setUp() {
@@ -119,7 +120,7 @@ class CustomerDataControllerTest {
     @Order(5)
     @DisplayName("Get all customers - DB populated")
     void testGetAllCustomers_ifCustomersInDB_returnsAllCustomers() throws JsonProcessingException {
-        AddCustomerRequestDto customer2 = new AddCustomerRequestDto(
+        customer2 = new AddCustomerRequestDto(
                 "Amelia",
                 "Burrows",
                 24,
@@ -184,6 +185,36 @@ class CustomerDataControllerTest {
         assertEquals(customer1.age(), retrievedCustomer.get(0).age(),
                 "Retrieved customer age did not match posted age");
         assertEquals(customer1.address().get(0), retrievedCustomer.get(0).address().get(0),
+                "Retrieved customer address did not match posted address");
+        assertEquals(customer1.emailAddress(), retrievedCustomer.get(0).emailAddress(),
+                "Retrieved customer email address did not match posted email address");
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("Search by name - last name only")
+    void testSearchByName_whenOnlyLastNameProvided_correctCustomersAreReturned() {
+        String lastName = customer1.lastName();
+        String requestURI = baseURI+"/search-by-name"+"?last-name="+lastName;
+        HttpEntity getRequestEntity = new HttpEntity(null, headers);
+        ResponseEntity<List<CustomerResponseDto>> response = testRestTemplate.exchange(requestURI,
+                HttpMethod.GET,
+                getRequestEntity,
+                new ParameterizedTypeReference<List<CustomerResponseDto>>() {
+                });
+        List<CustomerResponseDto> retrievedCustomer = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(2, retrievedCustomer.size());
+        assertEquals(customerId1, retrievedCustomer.get(0).customerId(),
+                "Retrieved customerId did not match posted customerId");
+        assertEquals(customer2.firstName(), retrievedCustomer.get(1).firstName(),
+                "Retrieved customer first name did not match posted first name");
+        assertEquals(customer2.lastName(), retrievedCustomer.get(1).lastName(),
+                "Retrieved customer last name did not match posted last name");
+        assertEquals(customer2.age(), retrievedCustomer.get(1).age(),
+                "Retrieved customer age did not match posted age");
+        assertEquals(customer2.address().get(0), retrievedCustomer.get(1).address().get(0),
                 "Retrieved customer address did not match posted address");
         assertEquals(customer1.emailAddress(), retrievedCustomer.get(0).emailAddress(),
                 "Retrieved customer email address did not match posted email address");

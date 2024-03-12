@@ -50,13 +50,27 @@ public class CustomerDataServiceImpl implements CustomerDataService {
                 .toList();
     }
 
+    /* Could use parallel stream for large datasets.
+    Not worth it for small datasets due to additional overhead and thread safety concerns. */
     @Override
     public List<CustomerResponseDto> searchByName(String firstName, String lastName) {
         if (firstName == null && lastName == null) {
             throw new MissingRequestDetailsException(emptySearchByNameRequestMessage);
         }
-        List<CustomerDataEntity> customers = customerDataRepo.findByFirstNameAndLastName(firstName, lastName);
+
+        List<CustomerDataEntity> customers =
+                (firstName == null) ? customerDataRepo.findByLastName(lastName) :
+                        (lastName == null) ? customerDataRepo.findByFirstName(firstName) :
+                                customerDataRepo.findByFirstNameAndLastName(firstName, lastName);
+//        if (firstName == null) {
+//            customers = customerDataRepo.findByLastName(lastName);
+//        } else if (lastName == null) {
+//            customers = customerDataRepo.findByFirstName(firstName);
+//        } else {
+//            customers = customerDataRepo.findByFirstNameAndLastName(firstName, lastName);
+//        }
         checkIfAnyCustomersFound(customers);
+
         return customers.stream()
                 .map(CustomerResponseDto::new)
                 .toList();
