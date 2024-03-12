@@ -5,6 +5,7 @@ import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.CustomerDataStore.Services.CustomerDataService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +47,7 @@ public class CustomerDataController {
 
     @PatchMapping("/{customerId}")
     public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable long customerId,
-                                                            @RequestBody EditCustomerRequestDto editedCustomer) {
+                                                            @Valid @RequestBody EditCustomerRequestDto editedCustomer) {
         return ResponseEntity.ok(customerDataService.updateCustomer(customerId, editedCustomer));
     }
 }
