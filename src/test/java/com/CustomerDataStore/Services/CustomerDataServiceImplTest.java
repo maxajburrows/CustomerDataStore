@@ -150,4 +150,9 @@ class CustomerDataServiceImplTest {
         assertEquals(address2, updatedCustomer.address().get(1));
         assertEquals(customer.getEmailAddress(), updatedCustomer.emailAddress());
     }
+
+    @Test
+    void testUpdateCustomer_whenInvalidCustomerIdProvided_CustomerNotFoundException() {
+
+    }
 }
