@@ -127,5 +127,6 @@ class CustomerDataServiceImplTest {
         assertEquals(address1, updatedCustomer.address().get(0));
         assertEquals(address2, updatedCustomer.address().get(1));
         assertEquals(newAddress, updatedCustomer.address().get(2));
+        assertEquals(customer.getEmailAddress(), updatedCustomer.emailAddress());
     }
 }
