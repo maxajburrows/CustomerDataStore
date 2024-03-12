@@ -46,6 +46,7 @@ public class CustomerDataController {
         return ResponseEntity.ok(customerDataService.createCustomer(newCustomer));
     }
 
+    // TODO: Make an empty patch request throw a bad request error.
     @PatchMapping("/{customerId}")
     public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable long customerId,
                                                               @Valid @RequestBody EditCustomerRequestDto editedCustomer) {
