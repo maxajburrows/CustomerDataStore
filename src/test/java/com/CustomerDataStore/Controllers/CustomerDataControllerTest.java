@@ -219,4 +219,32 @@ class CustomerDataControllerTest {
         assertEquals(customer1.emailAddress(), retrievedCustomer.get(0).emailAddress(),
                 "Retrieved customer email address did not match posted email address");
     }
+
+    @Test
+    @Order(8)
+    @DisplayName("Search by name - first name only")
+    void testSearchByName_whenOnlyFirstNameProvided_correctCustomersAreReturned() {
+        String firstName = customer2.firstName();
+        String requestURI = baseURI+"/search-by-name"+"?first-name="+firstName;
+        HttpEntity getRequestEntity = new HttpEntity(null, headers);
+        ResponseEntity<List<CustomerResponseDto>> response = testRestTemplate.exchange(requestURI,
+                HttpMethod.GET,
+                getRequestEntity,
+                new ParameterizedTypeReference<List<CustomerResponseDto>>() {
+                });
+        List<CustomerResponseDto> retrievedCustomer = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1, retrievedCustomer.size());
+        assertEquals(customer2.firstName(), retrievedCustomer.get(0).firstName(),
+                "Retrieved customer first name did not match posted first name");
+        assertEquals(customer2.lastName(), retrievedCustomer.get(0).lastName(),
+                "Retrieved customer last name did not match posted last name");
+        assertEquals(customer2.age(), retrievedCustomer.get(0).age(),
+                "Retrieved customer age did not match posted age");
+        assertEquals(customer2.address().get(0), retrievedCustomer.get(0).address().get(0),
+                "Retrieved customer address did not match posted address");
+        assertEquals(customer2.emailAddress(), retrievedCustomer.get(0).emailAddress(),
+                "Retrieved customer email address did not match posted email address");
+    }
 }
