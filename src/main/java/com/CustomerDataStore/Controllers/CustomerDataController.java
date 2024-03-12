@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// TODO: Pre-load database with some data
-// TODO: Add swagger documentation
+// TODO: Pre-load database with some data (4)
+// TODO: Add swagger documentation (1)
 @RestController
 @RequestMapping("/customers")
 public class CustomerDataController {
@@ -27,7 +27,6 @@ public class CustomerDataController {
         return ResponseEntity.ok(customerDataService.getCustomers());
     }
 
-    // TODO: Add hypermedia links to responses - maybe
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable long customerId) {
         return ResponseEntity.ok(customerDataService.getCustomerById(customerId));
@@ -40,15 +39,14 @@ public class CustomerDataController {
         return ResponseEntity.ok(customerDataService.searchByName(firstName, lastName));
     }
 
-    // TODO: Deal with invalid requests properly - no error message currently
-    // TODO: Can you make the post accept string address not just a list
+    // TODO: Deal with invalid requests properly - no error message currently (2)
+    // TODO: Can you make the post accept string address not just a list (3)
     @PostMapping
     public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
         // Validate the added email here
         return ResponseEntity.ok(customerDataService.createCustomer(newCustomer));
     }
 
-    // TODO: Make an empty patch request throw a bad request error.
     @PatchMapping("/{customerId}")
     public ResponseEntity<CustomerResponseDto> updateCustomer(@PathVariable long customerId,
                                                               @Valid @RequestBody EditCustomerRequestDto editedCustomer) {
