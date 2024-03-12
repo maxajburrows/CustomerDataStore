@@ -32,9 +32,30 @@ class CustomerDataControllerTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
     }
+
+    @Test
+    @Order(1)
+    @DisplayName("Get customer - invalid id throws exception")
+    void testGetCustomerById_whenInvalidIdProvided_404ReturnedWithMessage() {
+        ResponseEntity<String> response = testRestTemplate.getForEntity("/customers/1",
+                String.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(customerIdNotFoundMessage, response.getBody());
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("Get all customers - DB empty")
+    void testGetAllCustomers_whenNoCustomersExist_204Returned() {
+        ResponseEntity response = testRestTemplate.getForEntity("/customers", null);
+
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
     @Test
     @Order(3)
-    @DisplayName("Add customer")
+    @DisplayName("Add customer - valid details")
     void testCreateCustomer_whenValidCustomerDetailsProvided_ReturnsCustomerDetails() throws JsonProcessingException {
         customer1 = new AddCustomerRequestDto(
                 "Max",
@@ -68,7 +89,7 @@ class CustomerDataControllerTest {
     // TODO: Add display names to tests.
     @Test
     @Order(4)
-    @DisplayName("Get customer by Id")
+    @DisplayName("Get customer by Id - valid Id")
     void testGetCustomerById_whenValidIdProvided_CorrectCustomerIsReturned() {
         ResponseEntity<CustomerResponseDto> response = testRestTemplate.getForEntity("/customers/"+customerId1,
                 CustomerResponseDto.class);
@@ -89,20 +110,10 @@ class CustomerDataControllerTest {
                 "Retrieved customer email address did not match posted email address");
     }
 
-    @Test
-    @Order(1)
-    @DisplayName("Invalid id throws exceptions")
-    void testGetCustomerById_whenInvalidIdProvided_404ReturnedWithMessage() {
-        ResponseEntity<String> response = testRestTemplate.getForEntity("/customers/1",
-                String.class);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals(customerIdNotFoundMessage, response.getBody());
-    }
 
     @Test
     @Order(5)
-    @DisplayName("Get all customers DB populated")
+    @DisplayName("Get all customers - DB populated")
     void testGetAllCustomers_ifCustomersInDB_returnsAllCustomers() throws JsonProcessingException {
         AddCustomerRequestDto customer2 = new AddCustomerRequestDto(
                 "Amelia",
@@ -141,14 +152,5 @@ class CustomerDataControllerTest {
                 "Retrieved customer address did not match posted address");
         assertEquals(customer2.emailAddress(), customers.get(1).emailAddress(),
                 "Retrieved customer email address did not match posted email address");
-    }
-
-    @Test
-    @Order(2)
-    @DisplayName("Get all customers DB empty")
-    void testGetAllCustomers_whenNoCustomersExist_204Returned() {
-        ResponseEntity response = testRestTemplate.getForEntity("/customers", null);
-
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 }
