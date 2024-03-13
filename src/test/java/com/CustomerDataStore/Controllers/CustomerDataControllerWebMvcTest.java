@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @WebMvcTest(controllers = CustomerDataController.class)
 public class CustomerDataControllerWebMvcTest {
@@ -118,9 +119,10 @@ public class CustomerDataControllerWebMvcTest {
                 .readValue(mockResponse.getContentAsString(), new TypeReference<List<String>>(){});
 
         assertEquals(HttpStatus.BAD_REQUEST.value(), mockResponse.getStatus());
-        assertEquals(noAddressErrorMessage, errorMessages.get(0));
-        assertEquals(firstNameTooLongErrorMessage, errorMessages.get(1));
-        assertEquals(ageTooLowErrorMessage, errorMessages.get(2));
+        assertEquals(3, errorMessages.size());
+        assertTrue(errorMessages.contains(noAddressErrorMessage));
+        assertTrue(errorMessages.contains(firstNameTooLongErrorMessage));
+        assertTrue(errorMessages.contains(ageTooLowErrorMessage));
     }
 
     @Test
