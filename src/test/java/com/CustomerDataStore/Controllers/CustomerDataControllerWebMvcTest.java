@@ -1,6 +1,7 @@
 package com.CustomerDataStore.Controllers;
 
 import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
+import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.CustomerDataStore.Services.CustomerDataService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -41,6 +42,8 @@ public class CustomerDataControllerWebMvcTest {
             "First name must be between 2 and 30 characters";
     private static final String ageTooLowErrorMessage =
             "Customer must be at least 10 years old!";
+    private static final String addressLengthErrorMessage =
+            "Address must be at least 3 characters";
 
     @BeforeEach
     void setUp() {
@@ -118,5 +121,26 @@ public class CustomerDataControllerWebMvcTest {
         assertEquals(noAddressErrorMessage, errorMessages.get(0));
         assertEquals(firstNameTooLongErrorMessage, errorMessages.get(1));
         assertEquals(ageTooLowErrorMessage, errorMessages.get(2));
+    }
+
+    @Test
+    @DisplayName("Patch request - invalid address")
+    void testUpdateCustomer_whenInvalidAddressProvided_400AndErrorMessageReturned() throws Exception {
+        EditCustomerRequestDto customerUpdates = new EditCustomerRequestDto(
+                "sm",
+                "email@email.com"
+        );
+        RequestBuilder requestBuilder =  MockMvcRequestBuilders.patch("/customers/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(customerUpdates));
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse mockResponse = mvcResult.getResponse();
+        List<String> errorMessages = new ObjectMapper()
+                .readValue(mockResponse.getContentAsString(), new TypeReference<List<String>>(){});
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), mockResponse.getStatus());
+        assertEquals(addressLengthErrorMessage, errorMessages.get(0));
     }
 }
