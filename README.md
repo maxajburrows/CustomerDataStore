@@ -33,6 +33,5 @@ To run the application locally and test the endpoints:
 3. Build and run the application using Maven: `mvn clean install && mvn spring-boot:run`.
 5. The application will start locally on port [8080](http://localhost:8080).
 6. Try it out!:
-   - ** Send requests to http://localhost:8080
-   - ** Navigate to http://localhost:8080/swagger-ui/index.html to test it with swagger
-
+   - Send requests to http://localhost:8080
+   - Navigate to http://localhost:8080/swagger-ui/index.html to test it with swagger.
