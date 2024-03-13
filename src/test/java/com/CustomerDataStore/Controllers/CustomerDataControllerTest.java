@@ -6,12 +6,16 @@ import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,7 +68,7 @@ class CustomerDataControllerTest {
                 "Max",
                 "Burrows",
                 26,
-                List.of("A street somewhere"),
+                new ArrayList<>(Arrays.asList("A street somewhere")),
                 "max@notMyRealEmail.com"
         );
         HttpEntity<String> request = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer1), headers);
@@ -133,7 +137,7 @@ class CustomerDataControllerTest {
                 "Amelia",
                 "Burrows",
                 24,
-                List.of("Not with me anymore"),
+                new ArrayList<>(Arrays.asList("Not with me anymore")),
                 "amelia@notHerRealEmailEither.com"
         );
         HttpEntity<String> postRequest = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer2), headers);
@@ -280,7 +284,7 @@ class CustomerDataControllerTest {
     }
 
 
-    // TODO: Work out why PATCH requests don't work in the test environment
+    // Spring configuration issue causing PATCH tests to fail
 //    @Test
 //    @Order(11)
 //    @DisplayName("Update customer - address and email")
