@@ -12,6 +12,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,7 +66,7 @@ class CustomerDataControllerTest {
                 "Max",
                 "Burrows",
                 26,
-                List.of("A street somewhere"),
+                new ArrayList<>(Arrays.asList("A street somewhere")),
                 "max@notMyRealEmail.com"
         );
         HttpEntity<String> request = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer1), headers);
@@ -133,7 +135,7 @@ class CustomerDataControllerTest {
                 "Amelia",
                 "Burrows",
                 24,
-                List.of("Not with me anymore"),
+                new ArrayList<>(Arrays.asList("Not with me anymore")),
                 "amelia@notHerRealEmailEither.com"
         );
         HttpEntity<String> postRequest = new HttpEntity<>(new ObjectMapper().writeValueAsString(customer2), headers);
