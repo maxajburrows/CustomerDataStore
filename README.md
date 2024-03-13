@@ -41,5 +41,5 @@ To run the application locally and test the endpoints:
 - Validate email addresses with a regex.
 - Add e2e PATCH tests.
 - Implement a DELETE endpoint.
-- Improve automation of test reporting.
+- Improve automated test reporting.
 - Fully deploy the app with a production database.
