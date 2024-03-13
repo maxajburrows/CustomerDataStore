@@ -5,14 +5,12 @@ import com.CustomerDataStore.Dtos.CustomerResponseDto;
 import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.CustomerDataStore.Services.CustomerDataService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 // TODO: Pre-load database with some data (4)
-// TODO: Add swagger documentation (1)
 @RestController
 @RequestMapping("/customers")
 public class CustomerDataController {
@@ -40,7 +38,6 @@ public class CustomerDataController {
     }
 
     // TODO: Deal with invalid requests properly - no error message currently (2)
-    // TODO: Can you make the post accept string address not just a list (3)
     @PostMapping
     public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
         // TODO: Validate the added email here (3)
