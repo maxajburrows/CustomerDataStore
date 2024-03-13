@@ -8,13 +8,11 @@ import com.CustomerDataStore.Exceptions.CustomerNotFoundException;
 import com.CustomerDataStore.Exceptions.MissingRequestDetailsException;
 import com.CustomerDataStore.Exceptions.NoCustomersException;
 import com.CustomerDataStore.Repositories.CustomerDataRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
 
 @Service
 public class CustomerDataServiceImpl implements CustomerDataService {

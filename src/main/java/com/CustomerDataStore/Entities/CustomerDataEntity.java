@@ -1,7 +1,6 @@
 package com.CustomerDataStore.Entities;
 
 import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
-import com.CustomerDataStore.Repositories.CustomerDataRepository;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

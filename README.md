@@ -32,4 +32,14 @@ To run the application locally and test the endpoints:
 2. Navigate to the project directory.
 3. Build and run the application using Maven: `mvn clean install && mvn spring-boot:run`.
 5. The application will start locally on port [8080](http://localhost:8080).
-6. Use a tool like Postman to test the endpoints listed above.
+6. Try it out!:
+   - Send requests to http://localhost:8080
+   - Navigate to http://localhost:8080/swagger-ui/index.html to test it with swagger.
+  
+## Future Work
+
+- Validate email addresses with a regex.
+- Add e2e PATCH tests.
+- Implement a DELETE endpoint.
+- Improve automated test reporting.
+- Fully deploy the app with a production database.
