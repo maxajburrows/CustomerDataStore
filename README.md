@@ -35,3 +35,11 @@ To run the application locally and test the endpoints:
 6. Try it out!:
    - Send requests to http://localhost:8080
    - Navigate to http://localhost:8080/swagger-ui/index.html to test it with swagger.
+  
+## Future Work
+
+- Validate email addresses with a regex.
+- Add e2e PATCH tests.
+- Implement a DELETE endpoint.
+- Improve automation of test reporting.
+- Fully deploy the app with a production database.
