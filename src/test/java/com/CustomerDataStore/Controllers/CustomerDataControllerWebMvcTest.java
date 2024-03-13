@@ -3,7 +3,6 @@ package com.CustomerDataStore.Controllers;
 import com.CustomerDataStore.Dtos.AddCustomerRequestDto;
 import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.CustomerDataStore.Services.CustomerDataService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,9 +1,7 @@
 package com.CustomerDataStore.Dtos;
 
-
 import jakarta.validation.constraints.Size;
 
-// Validation on Dto required
 public record EditCustomerRequestDto(
         @Size(min = 3, message = "Address must be at least 3 characters")
         String address,

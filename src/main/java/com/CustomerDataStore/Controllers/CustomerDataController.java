@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// TODO: Pre-load database with some data (4)
 @RestController
 @RequestMapping("/customers")
 public class CustomerDataController {
@@ -37,10 +36,8 @@ public class CustomerDataController {
         return ResponseEntity.ok(customerDataService.searchByName(firstName, lastName));
     }
 
-    // TODO: Deal with invalid requests properly - no error message currently (2)
     @PostMapping
     public ResponseEntity<CustomerResponseDto> createCustomer(@Valid @RequestBody AddCustomerRequestDto newCustomer) {
-        // TODO: Validate the added email here (3)
         return ResponseEntity.ok(customerDataService.createCustomer(newCustomer));
     }
 

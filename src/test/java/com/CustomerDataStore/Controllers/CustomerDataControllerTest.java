@@ -6,13 +6,11 @@ import com.CustomerDataStore.Dtos.EditCustomerRequestDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -282,35 +280,4 @@ class CustomerDataControllerTest {
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
-
-
-    // Spring configuration issue causing PATCH tests to fail
-//    @Test
-//    @Order(11)
-//    @DisplayName("Update customer - address and email")
-//    void testUpdateCustomer_whenAddressAndEmailAddressProvided_bothCorrectlyUpdatedAndReturned() {
-//        HttpEntity<EditCustomerRequestDto> patchRequestEntity = new HttpEntity(customerUpdate, headers);
-//        String url = baseURI+"/"+customerId1;
-//        ResponseEntity<CustomerResponseDto> response = testRestTemplate.exchange(url,
-//                HttpMethod.PATCH,
-//                patchRequestEntity,
-//                CustomerResponseDto.class);
-//        CustomerResponseDto retrievedCustomer = response.getBody();
-//
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertEquals(customerId1, retrievedCustomer.customerId(),
-//                "Retrieved customerId did not match posted customerId");
-//        assertEquals(customer1.firstName(), retrievedCustomer.firstName(),
-//                "Retrieved customer first name did not match posted first name");
-//        assertEquals(customer1.lastName(), retrievedCustomer.lastName(),
-//                "Retrieved customer last name did not match posted last name");
-//        assertEquals(customer1.age(), retrievedCustomer.age(),
-//                "Retrieved customer age did not match posted age");
-//        assertEquals(customer1.address().get(0), retrievedCustomer.address().get(0),
-//                "Retrieved customer address did not match posted address");
-//        assertEquals(newAddress, retrievedCustomer.address().get(1),
-//                "Retrieved customer address did not match patched address");
-//        assertEquals(newEmailAddress, retrievedCustomer.emailAddress(),
-//                "Retrieved customer email address did not match patched email address");
-//    }
 }
