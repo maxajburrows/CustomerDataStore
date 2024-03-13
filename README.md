@@ -17,7 +17,7 @@ Each customer in the database has the following fields:
 - **First Name**: The first name of the customer.
 - **Last Name**: The last name of the customer.
 - **Age**: The age of the customer.
-- **Address**: The address of the customer.
+- **Address**: A list of addresses associated with the customer.
 - **Email Address**: The email address of the customer.
 
 ## Database
@@ -32,5 +32,5 @@ To run the application locally and test the endpoints:
 2. Navigate to the project directory.
 3. Build the project using Maven: `mvn clean install`.
 4. Run the application: `mvn spring-boot:run`.
-5. The application will start locally on port 8080.
+5. The application will start locally on port [8080](http://localhost:8080).
 6. Use a tool like Postman to test the endpoints listed above.
