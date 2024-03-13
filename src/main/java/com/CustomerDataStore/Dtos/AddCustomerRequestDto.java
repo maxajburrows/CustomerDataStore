@@ -17,10 +17,10 @@ public record AddCustomerRequestDto(
         @Size(min = 2, max = 30, message = "Last name must be between 2 and 30 characters")
         String lastName,
         @NotNull(message = "Customer must have an age")
-        @Min(value = 10, message = "Age must be at least 10")
-        @Max(value = 110, message = "Age must not exceed 110")
+        @Min(value = 10, message = "Customer must be at least 10 years old!")
+        @Max(value = 110, message = "Customer must be no older than 110!")
         int age,
-        @NotNull(message = "Customer must have at least one address")
+        @NotNull(message = "Customer must have at least one address!")
         @Size(min = 1, message = "Customer must have at least one address!")
         List<String> address,
         @NotNull(message = "Customer must have an email address!")

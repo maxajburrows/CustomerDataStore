@@ -35,6 +35,12 @@ public class CustomerDataControllerWebMvcTest {
     private AddCustomerRequestDto customer1;
     private static final String nullEmailErrorMessage =
             "Customer must have an email address!";
+    private static final String noAddressErrorMessage =
+            "Customer must have at least one address!";
+    private static final String firstNameTooLongErrorMessage =
+            "First name must be between 2 and 30 characters";
+    private static final String ageTooLowErrorMessage =
+            "Customer must be at least 10 years old!";
 
     @BeforeEach
     void setUp() {
@@ -48,7 +54,7 @@ public class CustomerDataControllerWebMvcTest {
     }
 
     @Test
-    @DisplayName("Post request - null field")
+    @DisplayName("Post request - email null")
     void testCreateCustomer_whenNullEmailAddressProvided_400AndErrorMessageReturned() throws Exception {
         RequestBuilder requestBuilder =  MockMvcRequestBuilders.post("/customers")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -62,5 +68,55 @@ public class CustomerDataControllerWebMvcTest {
 
         assertEquals(HttpStatus.BAD_REQUEST.value(), mockResponse.getStatus());
         assertEquals(nullEmailErrorMessage, errorMessages.get(0));
+    }
+
+    @Test
+    @DisplayName("Post request - empty address field")
+    void testCreateCustomer_whenNoAddressProvided_400AndErrorMessageReturned() throws Exception {
+        AddCustomerRequestDto customer2 = new AddCustomerRequestDto(
+                "Ryan",
+                "Gosling",
+                38,
+                new ArrayList<>(),
+                "email@email.com"
+        );
+        RequestBuilder requestBuilder =  MockMvcRequestBuilders.post("/customers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(customer2));
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse mockResponse = mvcResult.getResponse();
+        List<String> errorMessages = new ObjectMapper()
+                .readValue(mockResponse.getContentAsString(), new TypeReference<List<String>>(){});
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), mockResponse.getStatus());
+        assertEquals(noAddressErrorMessage, errorMessages.get(0));
+    }
+
+    @Test
+    @DisplayName("Post request - multiple invalid fields")
+    void testCreateCustomer_whenMultipleInvalidFieldsProvided_400AndAllErrorMessageReturned() throws Exception {
+        AddCustomerRequestDto customer3 = new AddCustomerRequestDto(
+                "ReallyReallyLongNameReallyReallyLongNameReallyReallyLongNameReallyReallyLongName",
+                "Gosling",
+                5,
+                null,
+                "email@email.com"
+        );
+        RequestBuilder requestBuilder =  MockMvcRequestBuilders.post("/customers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(customer3));
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse mockResponse = mvcResult.getResponse();
+        List<String> errorMessages = new ObjectMapper()
+                .readValue(mockResponse.getContentAsString(), new TypeReference<List<String>>(){});
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), mockResponse.getStatus());
+        assertEquals(noAddressErrorMessage, errorMessages.get(0));
+        assertEquals(firstNameTooLongErrorMessage, errorMessages.get(1));
+        assertEquals(ageTooLowErrorMessage, errorMessages.get(2));
     }
 }
