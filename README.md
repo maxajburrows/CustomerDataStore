@@ -30,7 +30,6 @@ To run the application locally and test the endpoints:
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
-3. Build the project using Maven: `mvn clean install`.
-4. Run the application: `mvn spring-boot:run`.
+3. Build and run the application using Maven: `mvn clean install && mvn spring-boot:run`.
 5. The application will start locally on port [8080](http://localhost:8080).
 6. Use a tool like Postman to test the endpoints listed above.
