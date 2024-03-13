@@ -8,11 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 public class GlobalErrorHandler {
     @ControllerAdvice
-    public static class CustomerDataExceptionHandler extends ResponseEntityExceptionHandler {
+    public static class CustomerDataExceptionHandler {
         @ExceptionHandler({CustomerNotFoundException.class})
         protected ResponseEntity<String> handleCustomerNotFoundException(CustomerNotFoundException exception) {
             return ResponseEntity
@@ -32,7 +31,7 @@ public class GlobalErrorHandler {
                     .body(exception.getMessage());
         }
 
-        @ExceptionHandler(MethodArgumentNotValidException.class)
+        @ExceptionHandler({MethodArgumentNotValidException.class})
         protected ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
