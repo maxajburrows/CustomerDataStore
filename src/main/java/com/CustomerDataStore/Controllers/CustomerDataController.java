@@ -19,6 +19,7 @@ public class CustomerDataController {
         this.customerDataService = customerDataService;
     }
 
+    // TODO: Get response with no data should return empty 200 not 204 response
     @GetMapping
     public ResponseEntity<List<CustomerResponseDto>> getAllCustomers() {
         return ResponseEntity.ok(customerDataService.getCustomers());
